@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    container_name: decido-db
+    image: mongo:latest
+    restart: always
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASS}
+      - MONGO_INITDB_DATABASE=${MONGODB_DB}
+    ports: 
+      - 127.0.0.1:27017:27017
+    volumes:
+      - ./db:/data/db
+  mq:
+    container_name: decido-mq
+    image: rabbitmq:3.9.18-management-alpine
+    restart: always
+    ports:
+      - 127.0.0.1:5672:5672
+      - 127.0.0.1:15672:15672
