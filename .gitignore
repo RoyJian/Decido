@@ -1,0 +1,4 @@
+# Desktop Services Store
+.DS_Store
+# env file
+.env
