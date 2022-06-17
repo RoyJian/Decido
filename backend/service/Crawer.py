@@ -14,7 +14,7 @@ class Crawer:
         self.key = key
         # RabbitMQ Client
         self.rabbitmq = RabbitmqConn()
-        self.queueName = 'Restautants'
+        self.queueName = 'r2'
         self.rabbitmq.QueueDeclare(self.queueName)
         self.channel = self.rabbitmq.channel
         pass
@@ -23,7 +23,7 @@ class Crawer:
         url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         params = {
             'location': location,
-            'radius': '1000',
+            'radius': '500',
             'type': 'restaurant',
             'language': 'zh-TW',
             'key': self.key
@@ -41,10 +41,10 @@ class Crawer:
             info = {
                 'place_id': result['place_id'],
                 'name': result['name'],
-                'score': result['rating'],
+                'score': result.get('rating',0),
                 'location': {
                     'type': 'Point',
-                    'coordinates': [lat, lng],
+                    'coordinates': [lng, lat],
                 },
             }
             InsertQueue(info)
@@ -69,6 +69,7 @@ class Crawer:
             else:
                 print('end')
                 isDone = True
+        # self.channel.close()
     pass
 
 class WorkThread(threading.Thread):
@@ -89,13 +90,13 @@ def main():
     load_dotenv()
     key = os.getenv("GOOLE_MAPS_KEY")
     initLocation = (25.05997860074323, 121.52320746563369)
-    latNum = 3
-    lngNum = 3
+    latNum = 24
+    lngNum = 12
     locations = []
     for x in range(latNum):
-        lat = initLocation[0] - (x * 0.01)
+        lat = initLocation[0] - (x * 0.004)
         for y in range(lngNum):
-            lng = initLocation[1] + (y * 0.01)
+            lng = initLocation[1] + (y * 0.004)
             locations.append('{x},{y}'.format(x=lat, y=lng))
     threads = []
     for i in range(latNum):
