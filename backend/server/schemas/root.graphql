@@ -1,0 +1,7 @@
+type Query {
+  restaurants(lat:Float!,lng:Float,seed:String): [restaurant],
+}
+type restaurant {
+    name:String,
+    corrwith:Float
+}
