@@ -1,6 +1,5 @@
 from utils.MongodbConn import MongodbConn
 
-
 def main():
     mongodbConn = MongodbConn()
     collect = mongodbConn.setCollection('reviews')
