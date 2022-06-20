@@ -6,6 +6,13 @@ name = "pypi"
 [packages]
 requests = "*"
 python-dotenv = "*"
+pymongo = "*"
+dnspython = "*"
+pika = "*"
+numpy = "*"
+pandas = "*"
+openpyxl = "*"
+scikit-learn = "*"
 
 [dev-packages]
 ipykernel = "*"
