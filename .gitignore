@@ -6,5 +6,3 @@
 .vscode
 # dbfile
 db
-# Demo file
-*.ipynb

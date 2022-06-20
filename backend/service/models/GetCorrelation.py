@@ -2,7 +2,7 @@ import random
 import pandas as pd
 import numpy as np
 import sys
-sys.path.append("backend/service/utils")
+sys.path.append("./utils/")
 from MongodbConn import MongodbConn
 
 class GetCorrelation:
@@ -36,7 +36,7 @@ class GetCorrelation:
             index=["author_name"],
             columns=["restautant_name"],
             values="score")
-        pivot_table.fillna(random.randint(1, 5), inplace=True) # temp use fake score
+        pivot_table.fillna(0, inplace=True) # temp use fake score
         restaurant = pivot_table[self.restautant_name]
         similarity_with_other_restaurant = pivot_table.corrwith(restaurant)
         similarity_with_other_restaurant = similarity_with_other_restaurant.sort_values(

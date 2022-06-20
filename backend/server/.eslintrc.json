@@ -1,0 +1,10 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["typescript", "prettier"],
+    "extends": ["prettier"],
+    "rules": {
+      "prettier/prettier": 1,
+      "quotes": [2, "single"]
+    },
+    "ignorePatterns": ["dist/*", "node_modules/*"]
+  }
