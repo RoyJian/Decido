@@ -8,3 +8,6 @@
 db
 # Demo file
 *.ipynb
+# pnpm
+pnpm-lock.yaml
+node_modules
