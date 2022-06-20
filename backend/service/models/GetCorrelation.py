@@ -26,7 +26,7 @@ class GetCorrelation:
                 'location': {
                     '$near': {
                         '$geometry': {'type': 'Point', 'coordinates': self.coordinates},
-                        '$maxDistance': 300,
+                        '$maxDistance': 500,
                     },
                 }
             }, {'_id': 0, 'place_id': 1, 'name': 1})))
