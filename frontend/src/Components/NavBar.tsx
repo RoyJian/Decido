@@ -12,7 +12,7 @@ export default function NavBar() {
             edge="start"
             color="inherit"
             aria-label="left"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2}}
           >
             <FontAwesomeIcon icon={faAngleLeft} />
           </IconButton>
@@ -23,8 +23,8 @@ export default function NavBar() {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="left"
-            sx={{ mr: 2 }}
+            aria-label="menu"
+            sx={{ mr: 0 }}
           >
             <FontAwesomeIcon icon={faBars} />
           </IconButton>
