@@ -11,7 +11,7 @@ import P1 from '../imgs/p1.png';
 import P2 from '../imgs/p2.jpg';
 import P3 from '../imgs/p3.png';
 import P4 from '../imgs/p4.png';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const images = [
   {
@@ -113,7 +113,7 @@ export default function Wealcome() {
         />
       </Box>
       <Box mt={5} mb={5}>
-        <Button component={Link} to="/steps" sx={{ maxWidth: 151, maxHeight: 60 }}>Start</Button>
+        <Button variant="contained" component={Link} to="/steps" sx={{ maxWidth: 151, maxHeight: 60 }}>Start</Button>
       </Box>
     </Container>
   );
