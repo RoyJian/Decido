@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Test from './views/Test';
-import Wealcome from './views/Wealcome';
+import Welcome from './views/Welcome';
 import { theme } from './styles/Theme';
 import NavBar from './Components/NavBar';
 import { ThemeProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
+import Steps from './views/Steps';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
         <CssBaseline />
         <NavBar />
         <Routes>
-          <Route path="/" element={<Test />} />
-          <Route path="/wealcome" element={<Wealcome />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/steps" element={<Steps />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

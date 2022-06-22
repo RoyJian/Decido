@@ -8,9 +8,11 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import PhotoTitle from '../Components/PhotoTitle';
 import P1 from '../imgs/p1.png';
-import P2 from '../imgs/p2.png';
+import P2 from '../imgs/p2.jpg';
 import P3 from '../imgs/p3.png';
 import P4 from '../imgs/p4.png';
+import { Link,useNavigate } from 'react-router-dom';
+
 const images = [
   {
     label: '還在煩惱要吃什麼嗎？',
@@ -50,9 +52,9 @@ export default function Wealcome() {
   return (
     <Container
       maxWidth="lg"
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}
     >
-      <Box sx={{ maxWidth: 900, flexGrow: 1 }} mt={5}>
+      <Box sx={{ maxWidth: 900, flexGrow: 1 }}>
         <AutoPlaySwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={activeStep}
@@ -67,9 +69,8 @@ export default function Wealcome() {
                   component="img"
                   sx={{
                     display: 'block',
-                    maxWidth: 1200,
+                    maxWidth: 900,
                     overflow: 'hidden',
-                    height: 600,
                     width: '100%',
                     zIndex:'modal'
                   }}
@@ -111,8 +112,8 @@ export default function Wealcome() {
           }
         />
       </Box>
-      <Box mt={5}>
-        <Button sx={{ width: 151, height: 60 }}>Start</Button>
+      <Box mt={5} mb={5}>
+        <Button component={Link} to="/steps" sx={{ maxWidth: 151, maxHeight: 60 }}>Start</Button>
       </Box>
     </Container>
   );

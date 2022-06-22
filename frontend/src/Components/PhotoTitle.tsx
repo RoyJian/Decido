@@ -11,7 +11,6 @@ export default function PhotoTitle(props: Props) {
         sx={{
           color: '#FFFFFF',
           fontWeight: 600,
-          fontSize: 40,
           position: 'relative',
           left: 0,
           top: 100,
@@ -22,10 +21,10 @@ export default function PhotoTitle(props: Props) {
           boxShadow: 4,
           
         }}
+        variant="h4"
         pt={1}
         pr={3}
         pl={2}
-        zIndex={1500}
       >
         {props.text}
         <Box
@@ -33,7 +32,7 @@ export default function PhotoTitle(props: Props) {
             position: 'relative',
             height: 10,
             backgroundColor: 'rgba(241, 120, 185, 0.81)',
-            top: -20,
+            top: -10,
           }}
           zIndex={-1}
         />
