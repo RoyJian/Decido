@@ -1,5 +1,6 @@
 import React from 'react';
 import Step1 from '../Components/Step1';
+import Step2 from '../Components/Step2';
 import {
   Box,
   Container,
@@ -38,7 +39,6 @@ export default function Steps() {
       <Box sx={{ width: '100%' }} mt={5}>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
-            console.log(label);
             const stepProps: StepProps = {};
             const labelProps: LabelProps = {};
 
@@ -54,7 +54,7 @@ export default function Steps() {
         {activeStep === 0 ? (
           <Step1 />
         ) : activeStep === 1 ? (
-          <h1>step2</h1>
+          <Step2/>
         ) : (
           <h1>step3</h1>
         )}

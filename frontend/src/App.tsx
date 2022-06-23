@@ -7,7 +7,7 @@ import NavBar from './Components/NavBar';
 import { ThemeProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Steps from './views/Steps';
-import Context from './utils/AppProvider';
+import Context from './Contexts/AppProvider';
 
 function App() {
   return (
