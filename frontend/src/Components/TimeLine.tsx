@@ -1,6 +1,7 @@
 import { Box, Typography, Avatar, Grid } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationPin} from '@fortawesome/free-solid-svg-icons';
+import EditMeal from './EditMeal';
 import React from 'react';
 
 interface Props {
@@ -8,18 +9,21 @@ interface Props {
   time: string;
   location: string;
   isEnd:boolean;
+  index:number;
 }
 
 export default function TimeLine(props: Props) {
+  const [isEdit,setIsEdit] = React.useState(false);
   return (
     <React.Fragment>
+      <EditMeal index={props.index} enable={isEdit} setEnable={setIsEdit}/>
       <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center' ,alignItems:'center'}}>
         <Typography variant="h4" >
           {props.time}{' '}
         </Typography>
       </Grid>
       <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center',alignItems:'center' }}>
-        <Avatar sx={{ bgcolor: '#ffc0cb' }}></Avatar>
+        <Avatar sx={{ bgcolor: '#ffc0cb' }} onClick={()=>setIsEdit(true)}></Avatar>
       </Grid>
       <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center',alignItems:'center'}}>
         <Box>

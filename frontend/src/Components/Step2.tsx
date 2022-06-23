@@ -22,6 +22,7 @@ export default function Step2() {
               name={meal.name}
               location={meal.location}
               isEnd={(index === mealsArr.length-1) ? true : false}
+              index={index}
             />
           );
         })}
