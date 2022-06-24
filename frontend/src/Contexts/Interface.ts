@@ -4,5 +4,9 @@ export interface Meal{
       hour:number,
       min:number
     },
-    location:string
+    location:{
+      name:string,
+      lat:number,
+      lng:number
+    }
   }

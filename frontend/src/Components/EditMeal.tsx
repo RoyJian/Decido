@@ -1,4 +1,12 @@
-import { Backdrop, Button, Box, Grid, Avatar } from '@mui/material';
+import {
+  Backdrop,
+  Button,
+  Box,
+  Grid,
+  Avatar,
+  Icon,
+  InputAdornment,
+} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -6,14 +14,17 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AppContext, appContextValueInterface } from '../Contexts/AppProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationPin } from '@fortawesome/free-solid-svg-icons';
+import GoogleMaps from './GoogleMaps';
 import React from 'react';
+import { Marker } from '@react-google-maps/api';
+import { Meal } from '../Contexts/Interface';
 
 interface Props {
   index: number;
   enable: boolean;
   setEnable: (stste: boolean) => void;
 }
-const setTime = (hour:number,min:number)=>{
+const setTime = (hour: number, min: number) => {
   const time = new Date();
   time.setHours(hour);
   time.setMinutes(min);
@@ -27,7 +38,11 @@ export default function EditMeal(props: Props) {
   const [mealName, setMealName] = React.useState(mealsArr[props.index].name);
   const hour = mealsArr[props.index].time.hour;
   const min = mealsArr[props.index].time.min;
-  const [mealTime, setMealTime] = React.useState(setTime(hour,min));
+  const [mealTime, setMealTime] = React.useState<Date>(setTime(hour, min));
+  const [mealLocation, setMealLocation] = React.useState<Meal['location']>(
+    mealsArr[props.index].location
+  );
+  const [mealLocationName,setMealLocationName] = React.useState(mealsArr[props.index].location.name);
 
   return (
     <Backdrop
@@ -48,17 +63,15 @@ export default function EditMeal(props: Props) {
       >
         <Grid
           container
-          spacing={0}
+          spacing={2}
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
           }}
         >
           <Grid
             item
             xs={4}
-            
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -96,14 +109,13 @@ export default function EditMeal(props: Props) {
               justifyContent: 'center',
             }}
           >
-
-              <TextField
-                fullWidth
-                id="outlined-name"
-                label="Meal Name"
-                value={mealName}
-                onChange={(e) => setMealName(e.target.value)}
-              />
+            <TextField
+              fullWidth
+              id="outlined-name"
+              label="Meal Name"
+              value={mealName}
+              onChange={(e) => setMealName(e.target.value)}
+            />
           </Grid>
           <Grid
             item
@@ -114,12 +126,52 @@ export default function EditMeal(props: Props) {
               justifyContent: 'center',
             }}
           >
-            <h1>
-              <FontAwesomeIcon icon={faLocationPin} /> location
-            </h1>
+            <TextField
+              id="LocationName"
+              label="Location Name"
+              value={mealLocationName}
+              variant="standard"
+              onChange={(e) => {
+                setMealLocationName(e.target.value);
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FontAwesomeIcon icon={faLocationPin} />
+                  </InputAdornment>
+                ),
+              }}
+            ></TextField>
           </Grid>
-        </Grid>
-        <Grid
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'start',
+            }}
+          >
+            <GoogleMaps
+              center={{ lat: mealLocation.lat, lng: mealLocation.lng }}
+            >
+              <Marker
+                draggable
+                position={{
+                  lat: mealLocation.lat,
+                  lng: mealLocation.lng,
+                }}
+                onDragEnd={(e) => {
+                  const temp:Meal['location'] = mealLocation;
+                  temp.name = mealLocationName;
+                  temp.lat = e.latLng?.lat() as number;
+                  temp.lng = e.latLng?.lng() as number;
+                  setMealLocation(temp);
+                }}
+              />
+            </GoogleMaps>
+          </Grid>
+          <Grid
           item
           xs={6}
           sx={{
@@ -128,13 +180,48 @@ export default function EditMeal(props: Props) {
             justifyContent: 'start',
           }}
         >
-          <Button
-            variant="contained"
-            onClick={() => props.setEnable(false)}
-          >
+          <Button variant="contained" onClick={() => {
+              setMealName(mealsArr[props.index].name);
+              setMealTime(setTime(hour, min));
+              setMealLocation(mealsArr[props.index].location);
+              setMealLocationName(mealsArr[props.index].location.name);
+              props.setEnable(false);
+            }}>
             Cancel
           </Button>
         </Grid>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'end',
+          }}
+        >
+          <Button variant="contained" onClick={() => {
+              const temp:Meal[]= mealsArr;
+              const targetTemp:Meal = temp[props.index];
+              targetTemp.name = mealName;
+              targetTemp.time = {
+                hour: mealTime.getHours(),
+                min: mealTime.getMinutes()
+              };
+              targetTemp.location={
+                name:mealLocationName,
+                lat:mealLocation.lat,
+                lng:mealLocation.lng
+              };
+              temp[props.index] = targetTemp;
+              setMealsArr(temp);
+              props.setEnable(false);
+            }}>
+            Apply
+          </Button>
+        </Grid>
+        </Grid>
+
+
       </Box>
     </Backdrop>
   );
