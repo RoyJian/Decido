@@ -10,3 +10,14 @@ export interface Meal{
       lng:number
     }
   }
+
+  export interface Restaurant{
+    title:string,
+    score:number,
+    address:string,
+    imgURL:string
+  }
+  export interface DecideRes{
+    meal:string,
+    recommands:Restaurant[]
+  }
