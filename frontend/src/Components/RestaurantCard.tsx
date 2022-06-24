@@ -23,7 +23,7 @@ export default function RestaurantCard(props: Props) {
         </Typography>
         <Typography variant="body1" color="text.secondary">
           <Icon>
-         <LocationOnSharp></LocationOnSharp>
+          <Star></Star>
           </Icon>
          
             {' '}
@@ -31,7 +31,8 @@ export default function RestaurantCard(props: Props) {
         </Typography>
         <Typography variant="body1"  color="text.secondary">
           <Icon >
-          <Star></Star>
+         
+          <LocationOnSharp></LocationOnSharp>
           </Icon>
           
           {' '}

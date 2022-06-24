@@ -21,3 +21,7 @@ export interface Meal{
     meal:string,
     recommands:Restaurant[]
   }
+  export interface Location{
+    lat:number,
+    lng:number
+  }

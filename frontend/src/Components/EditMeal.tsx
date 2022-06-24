@@ -4,7 +4,6 @@ import {
   Box,
   Grid,
   Avatar,
-  Icon,
   InputAdornment,
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
@@ -199,7 +198,7 @@ export default function EditMeal(props: Props) {
             justifyContent: 'end',
           }}
         >
-          <Button variant="contained" onClick={() => {
+          <Button color="secondary" variant="contained" onClick={() => {
               const temp:Meal[]= mealsArr;
               const targetTemp:Meal = temp[props.index];
               targetTemp.name = mealName;
