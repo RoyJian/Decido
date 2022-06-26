@@ -25,6 +25,9 @@ export const theme = () => {
         main: prefersDarkMode ? '#f44336' : '#ba000d',
 
       },
+      // background: {
+      //   default:prefersDarkMode ?'#FFFFFF':'#000000'
+      // }
     },
   });
 };

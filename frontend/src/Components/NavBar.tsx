@@ -20,8 +20,9 @@ export default function NavBar() {
           > 
             <FontAwesomeIcon icon={faAngleLeft} />
           </IconButton>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }} fontWeight={600}>
+          <Typography onClick={() => navigate('/')} variant="h5" component="div" sx={{ flexGrow: 1 ,cursor:'pointer'}} fontWeight={600}>
             Decido
+            
           </Typography>
           <IconButton
             size="large"
