@@ -1,6 +1,7 @@
 export interface Meal{
     name:string,
     time:{
+      date:string,
       hour:number,
       min:number
     },
@@ -16,6 +17,7 @@ export interface Meal{
     score:number,
     address:string,
     imgURL:string
+    location:Location
   }
   export interface DecideRes{
     meal:string,

@@ -203,6 +203,7 @@ export default function EditMeal(props: Props) {
               const targetTemp:Meal = temp[props.index];
               targetTemp.name = mealName;
               targetTemp.time = {
+                date: new Date().toDateString(),
                 hour: mealTime.getHours(),
                 min: mealTime.getMinutes()
               };

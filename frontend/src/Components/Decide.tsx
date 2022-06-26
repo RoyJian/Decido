@@ -5,13 +5,14 @@ import EditMeal from './EditMeal';
 import React from 'react';
 import { AppContext, appContextValueInterface } from '../Contexts/AppProvider';
 import RestaurantCard from './RestaurantCard';
-import { DecideInit } from '../Contexts/InitValue';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { DecideRes } from '../Contexts/Interface';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
 import { EffectCards } from 'swiper';
 interface Props {
   index: number;
+  data: DecideRes[];
 }
 
 export default function TimeLine(props: Props) {
@@ -110,30 +111,22 @@ export default function TimeLine(props: Props) {
             className="mySwiper"
             onActiveIndexChange={(e)=>{
               console.log(e.activeIndex);
+              const decideRes :DecideRes[] = JSON.parse(localStorage.getItem('decideRes')|| '{}');
+              decideRes[props.index].recommands[0] = props.data[props.index].recommands[e.activeIndex];
+              localStorage.setItem('decideRes',JSON.stringify(decideRes));
             }}
           >
-            {DecideInit[props.index].recommands.map((restaurant, index) => (
+            {props.data[props.index].recommands.map((restaurant, index) => (
               <SwiperSlide key={restaurant.title}>
                 <RestaurantCard
                   title={restaurant.title}
                   score={restaurant.score}
                   address={restaurant.address}
                   imgURL={restaurant.imgURL}
-                  
                 />
               </SwiperSlide>
             ))}
           </Swiper>
-
-          {
-            //   <RestaurantCard
-            //   title={DecideInit[props.index].recommands[0].title}
-            //   score={DecideInit[props.index].recommands[0].score}
-            //   address={DecideInit[props.index].recommands[0].address}
-            //   imgURL={DecideInit[props.index].recommands[0].imgURL}
-            //   key={DecideInit[props.index].recommands[0].title}
-            // />
-          }
         </Grid>
       </Grid>
     </React.Fragment>

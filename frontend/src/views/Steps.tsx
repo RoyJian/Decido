@@ -1,4 +1,5 @@
 import React from 'react';
+import {  useNavigate } from 'react-router-dom';
 import Step1 from '../Components/Step1';
 import Step2 from '../Components/Step2';
 import Step3 from '../Components/Step3';
@@ -21,14 +22,7 @@ const steps = ['Choose a style', 'Number of Meals', 'Decide !'];
 
 export default function Steps() {
   const [activeStep, setActiveStep] = React.useState(0);
-
-//   const handleNext = () => {
-//     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-//   };
-
-//   const handleBack = () => {
-//     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-//   };
+  const navigate = useNavigate();
   return (
     <Container
       sx={{
@@ -72,6 +66,8 @@ export default function Steps() {
             setActiveStep(
               activeStep < steps.length ? activeStep + 1 : activeStep
             );
+            if (activeStep === steps.length -1 )
+              navigate('/Results');
           }}
         >
           Next

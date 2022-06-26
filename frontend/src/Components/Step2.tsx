@@ -46,6 +46,7 @@ export default function Step2() {
           temp.push({
              name:'',
              time:{
+              date: new Date().toDateString(),
               hour:new Date().getHours(),
               min:new Date().getMinutes()
             },
