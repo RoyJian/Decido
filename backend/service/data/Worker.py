@@ -2,8 +2,8 @@ import json
 import os
 import requests
 from pymongo import IndexModel, ASCENDING, DESCENDING, TEXT, GEOSPHERE
-from utils.RabbitmqConn import RabbitmqConn
-from utils.MongodbConn import MongodbConn
+from RabbitmqConn import RabbitmqConn
+from MongodbConn import MongodbConn
 from dotenv import load_dotenv
 from itertools import repeat
 
@@ -13,7 +13,7 @@ class Worker():
         self.key = key
         # threading.Thread.__init__(self)
         self.rabbitmq = RabbitmqConn()
-        self.queueName = 'r2'
+        self.queueName = 'restaurants'
         self.rabbitmq.QueueDeclare(self.queueName)
         self.channel = self.rabbitmq.channel
         # DB
@@ -23,8 +23,6 @@ class Worker():
         self.reviewCollection = self.mongo2.setCollection('reviews')
 
         try:
-            self.restaurantCollection.create_index(
-                [("place_id", TEXT), ], unique=True)
             self.restaurantCollection.create_index([("location", GEOSPHERE)])
             self.reviewCollection.create_index(
                 [("author_id", ASCENDING)])
@@ -44,7 +42,6 @@ class Worker():
                     'restautant_id': place_id,
                     'score': review['rating'],
                 }
-            
                 self.reviewCollection.update_one({'_id':objID},{'$set':r},upsert=True)
             except Exception as e:
                 print(e)
@@ -90,7 +87,7 @@ class Worker():
                         repeat(place_id)))  # to db
                 detail = {**restaurantData, **detail}  # to db
                 try:
-                    self.restaurantCollection.replace_one({'place_id':place_id},detail, upsert=True)
+                    self.restaurantCollection.replace_one({'_id':place_id},detail, upsert=True)
                 except Exception as e:
                     print(place_id)
                     print(str(e)[:20])

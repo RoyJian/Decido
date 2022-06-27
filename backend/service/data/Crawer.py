@@ -1,11 +1,12 @@
 import json
 import numbers
 import os
+import string
 import threading
 from time import sleep
 import requests
 from dotenv import load_dotenv
-from utils.RabbitmqConn import RabbitmqConn
+from RabbitmqConn import RabbitmqConn
 
 
 class Crawer:
@@ -14,19 +15,21 @@ class Crawer:
         self.key = key
         # RabbitMQ Client
         self.rabbitmq = RabbitmqConn()
-        self.queueName = 'r2'
+        self.queueName = 'restaurants'
         self.rabbitmq.QueueDeclare(self.queueName)
+        self.rabbitmq.QueueDeclare('rowData')
         self.channel = self.rabbitmq.channel
         pass
 
-    def Getplaces(self, location):
+    def Getplaces(self, location, keyword):
         url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         params = {
             'location': location,
             'radius': '500',
             'type': 'restaurant',
             'language': 'zh-TW',
-            'key': self.key
+            'key': self.key,
+            'keyword': keyword
         }
         isDone = False
 
@@ -41,13 +44,16 @@ class Crawer:
             info = {
                 'place_id': result['place_id'],
                 'name': result['name'],
-                'score': result.get('rating',0),
+                'score': result.get('rating', 0),
                 'location': {
                     'type': 'Point',
                     'coordinates': [lng, lat],
                 },
+                'tag':keyword
             }
             InsertQueue(info)
+            self.channel.basic_publish(
+                exchange='', routing_key='rowData', body=str(result))
             pass
 
         while not isDone:
@@ -72,36 +78,38 @@ class Crawer:
         # self.channel.close()
     pass
 
+
 class WorkThread(threading.Thread):
-    def __init__(self, key: str, num: int, locations: list):
+    def __init__(self, key: str, num: int, locations: list, keyword: str):
         threading.Thread.__init__(self)
         self.key = key
         self.num = num
         self.locations = locations
         self.crawer = Crawer(key)
+        self.keyword = keyword
 
     def run(self):
         print("Thread", self.num)
         for lo in self.locations:
-            self.crawer.Getplaces(lo)
+            self.crawer.Getplaces(lo, self.keyword)
 
 
 def main():
     load_dotenv()
     key = os.getenv("GOOLE_MAPS_KEY")
-    initLocation = (25.05997860074323, 121.52320746563369)
-    latNum = 24
-    lngNum = 12
+    initLocation = (25.046403324382986, 121.51748210185336)
+    latNum = 3
+    lngNum = 3
     locations = []
     for x in range(latNum):
-        lat = initLocation[0] - (x * 0.004)
+        lat = initLocation[0] - (x * 0.01)
         for y in range(lngNum):
-            lng = initLocation[1] + (y * 0.004)
+            lng = initLocation[1] + (y * 0.01)
             locations.append('{x},{y}'.format(x=lat, y=lng))
     threads = []
     for i in range(latNum):
         subLocations = locations[latNum * i: latNum * (i+1)]
-        threads.append(WorkThread(key, i, subLocations))
+        threads.append(WorkThread(key, i, subLocations, '麵店'))
         threads[i].start()
 
     for i in range(latNum):
