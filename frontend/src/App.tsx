@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Steps from './views/Steps';
 import Context from './Contexts/AppProvider';
 import Results from './views/Results';
+import Score from './views/Score';
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
           <CssBaseline />
           <NavBar />
           <Routes>
+          <Route path="/" element={<Welcome />} />
             <Route path="/test" element={<Test />} />
-            <Route path="/" element={<Welcome />} />
             <Route path="/steps" element={<Steps />} />
             <Route path="/results" element={<Results />}/>
+            <Route path="/Score" element={<Score />} />
           </Routes>
         </ThemeProvider>
       </Context>

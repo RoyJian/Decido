@@ -1,5 +1,11 @@
 import {
-  Box,Button,Container,MobileStepper,Paper,Typography,useTheme,
+  Box,
+  Button,
+  Container,
+  MobileStepper,
+  Paper,
+  Typography,
+  useTheme,
 } from '@mui/material';
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
@@ -11,7 +17,8 @@ import P1 from '../imgs/p1.png';
 import P2 from '../imgs/p2.jpg';
 import P3 from '../imgs/p3.png';
 import P4 from '../imgs/p4.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { DriveEtaRounded } from '@mui/icons-material';
 
 const images = [
   {
@@ -36,6 +43,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 export default function Wealcome() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  const navigate = useNavigate();
   const maxSteps = images.length;
 
   const handleNext = () => {
@@ -50,71 +58,80 @@ export default function Wealcome() {
     setActiveStep(step);
   };
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-    >
-      <Box sx={{ maxWidth: 900, flexGrow: 1 }}>
-        <AutoPlaySwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
+    <React.Fragment>
+      <AutoPlaySwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={activeStep}
+        onChangeIndex={handleStepChange}
+        enableMouseEvents
+      >
+        {images.map((step, index) => (
+          <div key={step.label}>
+            <Box
+              mt={-12}
+              style={{
+                width: '99vw',
+                height: '100vh',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundImage: `url(${step.imgPath})`,
+                filter: 'blur(20px)',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            ></Box>
+            <PhotoTitle text={step.label} />
+          </div>
+        ))}
+      </AutoPlaySwipeableViews>
+      <Box sx={{position:'relative' ,top:'-20vh' }}>
+      <Box sx={{display:'flex',justifyContent:'center'}}>
+        <Button
+          variant="contained"
+          sx={{ maxWidth: 151, maxHeight: 60 }}
+          onClick={() => {
+            const localDate = localStorage.getItem('date');
+            if (localDate !== new Date().toDateString() && localDate !== null) {
+              console.log('評分');
+              navigate('/score');
+            } else navigate('/steps');
+          }}
         >
-          {images.map((step, index) => (
-            <div key={step.label}>
-               <PhotoTitle  text={images[activeStep].label}/>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <Box
-                  component="img"
-                  sx={{
-                    display: 'block',
-                    maxWidth: 900,
-                    overflow: 'hidden',
-                    width: '100%',
-                    zIndex:'modal'
-                  }}
-                  src={step.imgPath}
-                ></Box>
-              ) : null}
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
-        <MobileStepper
-          steps={maxSteps}
-          position="static"
-          activeStep={activeStep}
-          nextButton={
-            <Button
-              size="small"
-              onClick={handleNext}
-              disabled={activeStep === maxSteps - 1}
-            >
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={handleBack}
-              disabled={activeStep === 0}
-            >
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-            </Button>
-          }
-        />
+          Start
+        </Button>
       </Box>
-      <Box mt={5} mb={5}>
-        <Button variant="contained" component={Link} to="/steps" sx={{ maxWidth: 151, maxHeight: 60 }}>Start</Button>
+      <MobileStepper
+        style={{background:'transparent'}}
+        steps={maxSteps}
+        position="static"
+        activeStep={activeStep}
+        nextButton={
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === maxSteps - 1}
+          >
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
+          </Button>
+        }
+        backButton={
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+          </Button>
+        }
+      />
+       
       </Box>
-    </Container>
+     
+    
+    </React.Fragment>
   );
 }
