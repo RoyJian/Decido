@@ -16,6 +16,7 @@ export default function Step3() {
       });
     localStorage.setItem('decideRes', JSON.stringify(decideRes));
     localStorage.setItem('mealArr',JSON.stringify(mealsArr));
+    localStorage.setItem('date',new Date().toDateString());
   },[]);
 
   return (
@@ -27,6 +28,7 @@ export default function Step3() {
               key={meal.name}
               index={index}
               data = { DecideInit}
+              isEdit = {true}
             />
           );
         })}

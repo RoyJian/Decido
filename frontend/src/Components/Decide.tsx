@@ -13,6 +13,7 @@ import { EffectCards } from 'swiper';
 interface Props {
   index: number;
   data: DecideRes[];
+  isEdit:boolean;
 }
 
 export default function TimeLine(props: Props) {
@@ -54,7 +55,7 @@ export default function TimeLine(props: Props) {
         >
           <Avatar
             sx={{ bgcolor: '#ffc0cb' }}
-            onClick={() => setIsEdit(true)}
+            onClick={() => props.isEdit?setIsEdit(true):setIsEdit(false)}
           ></Avatar>
         </Grid>
         <Grid

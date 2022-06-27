@@ -6,20 +6,25 @@ interface Props {
 
 export default function PhotoTitle(props: Props) {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' , justifyContent:'center',position:'relative',top:'-55vh'}}>
+      <Box sx={{
+         backdropFilter: 'blur(60px)',
+         boxShadow: 4,
+         width:500,
+         height:100,
+         background: 'rgba(0,0,0, 0.4)',
+         display:'center',
+         justifyContent:'center',
+         border: '3px solid #f1f1f1',
+         alignItems:'center',
+         borderRadius:'10px'
+      }
+
+      }>
       <Typography
         sx={{
           color: '#FFFFFF',
-          fontWeight: 600,
-          position: 'relative',
-          left: 0,
-          top: 100,
-          background: 'rgba(158, 158, 239, 0.33)',
-          backdropFilter: 'blur(20px)',
-          borderEndEndRadius: 35,
-          borderTopRightRadius: 35,
-          boxShadow: 4,
-          
+          fontWeight: 600, 
         }}
         variant="h4"
         pt={1}
@@ -37,6 +42,8 @@ export default function PhotoTitle(props: Props) {
           zIndex={-1}
         />
       </Typography>
+      </Box>
+      
     </Box>
   );
 }
