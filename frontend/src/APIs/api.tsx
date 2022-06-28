@@ -34,9 +34,9 @@ export const getRecommand = async (
   const variables:RestaurantVariables = {lat:0,lng:0};
   variables.lat = meal.location.lat;
   variables.lng = meal.location.lng;
-  meal.time.hour < 12 || meal.name ==='早餐'  ? variables.tag = '早餐' : '';
   tag !== '' ?  variables.tag = tag : variables.tag = null;
   seed !== '' ?  variables.seed = seed : variables.seed = null;
+  meal.time.hour < 12 || meal.name ==='早餐'  ? variables.tag = '早餐' : '';
   const query = gql`
     fragment restaurantfields on restaurant {
       place_id
@@ -60,6 +60,6 @@ export const getRecommand = async (
       }
     `;
   console.log(typeof variables.seed);
-  const result = await client.query({ query ,variables});
+  const result = await client.query({ query ,variables,fetchPolicy:'network-only'});
   return result.data.restaurants;
 };

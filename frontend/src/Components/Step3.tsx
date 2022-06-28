@@ -5,18 +5,20 @@ import { Box, Grid } from '@mui/material';
 import { DecideInit as i } from '../Contexts/InitValue'; //模擬api
 import { DecideRes } from '../Contexts/Interface';
 import { getRecommand } from '../APIs/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function Step3() {
   const { mealsArr ,theSelctStyle} = React.useContext(AppContext) as appContextValueInterface;
   const [DecideInit,setDecideInit] = React.useState<DecideRes[]>([]);
   const [isfinish,setIsFinish] = React.useState(false);
+  const navigate = useNavigate();
   React.useEffect(()=>{
       const DecideInit0:any[]= [];
       const seed = JSON.parse( localStorage.getItem('seed') || '[]'); 
       mealsArr.map((meal,index)=>{
         const tag = (meal.name!== '早餐' && meal.time.hour > 12 && Math.random() > 0.5) ? theSelctStyle : '';
         getRecommand((seed[index]||''),meal,tag).then((res)=>{
-          
+
           DecideInit0.push({
             meal:meal.name,
             recommands:res
@@ -38,6 +40,9 @@ export default function Step3() {
           }
             
 
+        }).catch((err)=>{
+          window.alert(err);
+          navigate('/steps');
         });
       });
       

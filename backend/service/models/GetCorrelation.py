@@ -39,6 +39,8 @@ class GetCorrelation:
                     }
                 ]
             }, {'_id': 0, 'place_id': 1, 'name': 1})))
+        if itemData.shape[0] < 2 :
+            return {'errorcode':666,'msg': 'No match restaurants'}
         itemData.columns = ['restautant_id', 'restautant_name']
         if self.restautant_name == '':
             randindex = random.randrange((itemData.shape[0]-1))
