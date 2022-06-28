@@ -22,6 +22,8 @@ export default function Step2() {
       >
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {mealsArr.map((meal, index) => {
+            // meal.location.lat = yourLocation.lat;
+            // meal.location.lng = yourLocation.lng;
             return (
               <TimeLine
                 key={`${meal.name}${index}`}

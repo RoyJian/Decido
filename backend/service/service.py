@@ -16,7 +16,9 @@ async def GetCorrelation(request):
     args = request.args
     lng = float(args.get('lng',121.5374623))
     lat = float(args.get('lat',25.0351811))
-    getCorrelation = GetCorrelationModel(args.get('seed','麥當勞'),[lng,lat])
+    tag = args.get('tag',{'$ne':''})
+    seed = args.get('seed','')
+    getCorrelation = GetCorrelationModel(seed,[lng,lat],tag)
     data = getCorrelation.CalcCorrelation()
     return json(data)
 
