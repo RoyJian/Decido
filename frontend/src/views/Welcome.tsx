@@ -17,8 +17,9 @@ import P1 from '../imgs/p1.png';
 import P2 from '../imgs/p2.jpg';
 import P3 from '../imgs/p3.png';
 import P4 from '../imgs/p4.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { DriveEtaRounded } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import {registID} from '../APIs/api';
+
 
 const images = [
   {
@@ -45,6 +46,20 @@ export default function Wealcome() {
   const [activeStep, setActiveStep] = React.useState(0);
   const navigate = useNavigate();
   const maxSteps = images.length;
+
+  React.useEffect(()=>{
+    const uuid = localStorage.getItem('uuid');
+    if (uuid === null){
+      //ToDo
+      registID().then((res)=>{
+        console.log(res);
+        localStorage.setItem('uuid',res);
+      });
+    }
+    else{
+      console.log('nothing');
+    }
+  },[]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

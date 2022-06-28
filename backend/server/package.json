@@ -8,12 +8,14 @@
   "license": "MIT",
   "dependencies": {
     "@graphql-tools/load-files": "^6.5.3",
+    "@types/uuid": "^8.3.4",
     "apollo-server": "^3.8.1",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "graphql": "^16.5.0",
     "mongodb": "^4.6.0",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.27.0",

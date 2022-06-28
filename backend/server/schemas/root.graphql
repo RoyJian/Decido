@@ -1,5 +1,9 @@
 type Query {
-  restaurants(lat:Float!,lng:Float,seed:String): [restaurant],
+  restaurants(lat:Float!,lng:Float!,seed:String!): [restaurant],
+  uuid:String
+}
+type UUID {
+  uuid:String
 }
 type restaurant {
     name:String,
