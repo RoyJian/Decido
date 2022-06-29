@@ -1,17 +1,19 @@
+from MongodbConn import MongodbConn
 import random
 import pandas as pd
 import numpy as np
 import sys
 sys.path.append("./utils/")
-from MongodbConn import MongodbConn
+
 
 class GetCorrelation:
     def __init__(
-        self, restautant_name, coordinates: list[float]
+        self, restautant_name, coordinates: list[float], tag
     ) -> None:
         self.mongodbConn = MongodbConn()
         self.restautant_name = restautant_name
         self.coordinates = coordinates
+        self.tag = tag
         pass
 
     def CalcCorrelation(self):
@@ -28,27 +30,41 @@ class GetCorrelation:
                         '$geometry': {'type': 'Point', 'coordinates': self.coordinates},
                         '$maxDistance': 500,
                     },
-                }
+                },
+                '$or': [
+                    {
+                        'tag': self.tag
+                    }, {
+                        'name': self.restautant_name
+                    }
+                ]
             }, {'_id': 0, 'place_id': 1, 'name': 1})))
+        if itemData.shape[0] < 2 :
+            return {'errorcode':666,'msg': 'No match restaurants'}
         itemData.columns = ['restautant_id', 'restautant_name']
+        if self.restautant_name == '':
+            randindex = random.randrange((itemData.shape[0]-1))
+            self.restautant_name = itemData.iloc[randindex]['restautant_name']
+            print(self.restautant_name)
+            print('init restautant_name')
         data = pd.merge(userData, itemData)
         pivot_table = data.pivot_table(
             index=["author_name"],
             columns=["restautant_name"],
-            values="score")
-        pivot_table.fillna(0, inplace=True) # temp use fake score
+            values="score"
+        )
+        pivot_table.fillna(0, inplace=True)  # temp use fake score
         restaurant = pivot_table[self.restautant_name]
         similarity_with_other_restaurant = pivot_table.corrwith(restaurant)
         similarity_with_other_restaurant = similarity_with_other_restaurant.sort_values(
             ascending=False)
-        res = pd.DataFrame({'name': similarity_with_other_restaurant.index,
-                           'corrwith': similarity_with_other_restaurant.values})
-        # print(res.head())
-        res = res[1:6].to_dict('records')
+        res = pd.DataFrame({
+            'name': similarity_with_other_restaurant.index,
+            'corrwith': similarity_with_other_restaurant.values
+        })
+        res = res[1:4].to_dict('records')
         return res
 
 
 if __name__ == '__main__':
-    # matrix = GetCorrelation('甘泉魚麵 新生店', [121.53248433036269, 25.038479520773553])
-    # matrix.CalcCorrelation()
     pass

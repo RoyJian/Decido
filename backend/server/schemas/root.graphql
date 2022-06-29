@@ -1,7 +1,21 @@
 type Query {
-  restaurants(lat:Float!,lng:Float,seed:String): [restaurant],
+  restaurants(lat:Float!,lng:Float!,seed:String,tag:String): [restaurant],
+  uuid:String
 }
 type restaurant {
-    name:String,
-    corrwith:Float
+  _id:String,
+  place_id:String,
+  name:String,
+  score:Float,
+  location:Location,
+  tag:String,
+  address:String,
+  weekday_text:[String]
+  photo_id:String,
+  url:String,
+  corrwith:Float
+}
+type Location{
+  lat:Float,
+  lng:Float
 }

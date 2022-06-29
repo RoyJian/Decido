@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  MobileStepper,
-  Paper,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, MobileStepper, useTheme } from '@mui/material';
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
@@ -17,8 +9,8 @@ import P1 from '../imgs/p1.png';
 import P2 from '../imgs/p2.jpg';
 import P3 from '../imgs/p3.png';
 import P4 from '../imgs/p4.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { DriveEtaRounded } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { registID } from '../APIs/api';
 
 const images = [
   {
@@ -45,6 +37,17 @@ export default function Wealcome() {
   const [activeStep, setActiveStep] = React.useState(0);
   const navigate = useNavigate();
   const maxSteps = images.length;
+
+  React.useEffect(() => {
+    const uuid = localStorage.getItem('uuid');
+    if (uuid === null) {
+      //ToDo
+      registID().then((res) => {
+        console.log(res);
+        localStorage.setItem('uuid', res);
+      });
+    }
+  }, []);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -84,54 +87,58 @@ export default function Wealcome() {
           </div>
         ))}
       </AutoPlaySwipeableViews>
-      <Box sx={{position:'relative' ,top:'-20vh' }}>
-      <Box sx={{display:'flex',justifyContent:'center'}}>
-        <Button
-          variant="contained"
-          sx={{ maxWidth: 151, maxHeight: 60 }}
-          onClick={() => {
-            const localDate = localStorage.getItem('date');
-            if (localDate !== new Date().toDateString() && localDate !== null) {
-              console.log('評分');
-              navigate('/score');
-            } else navigate('/steps');
-          }}
-        >
-          Start
-        </Button>
-      </Box>
-      <MobileStepper
-        style={{background:'transparent'}}
-        steps={maxSteps}
-        position="static"
-        activeStep={activeStep}
-        nextButton={
+      <Box sx={{ position: 'relative', top: '-20vh' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
+            variant="contained"
+            sx={{ maxWidth: 151, maxHeight: 60 }}
+            onClick={() => {
+              const localDate = localStorage.getItem('date');
+              if (
+                localDate !== new Date().toDateString() &&
+                localDate !== null
+              ) {
+                console.log('評分');
+                navigate('/score');
+              } else navigate('/steps');
+            }}
           >
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
+            Start
           </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-          </Button>
-        }
-      />
-       
+        </Box>
+        <MobileStepper
+          style={{ background: 'transparent' }}
+          steps={maxSteps}
+          position="static"
+          activeStep={activeStep}
+          nextButton={
+            <Button
+              size="small"
+              onClick={handleNext}
+              disabled={activeStep === maxSteps - 1}
+            >
+              {theme.direction === 'rtl' ? (
+                <KeyboardArrowLeft />
+              ) : (
+                <KeyboardArrowRight />
+              )}
+            </Button>
+          }
+          backButton={
+            <Button
+              size="small"
+              onClick={handleBack}
+              disabled={activeStep === 0}
+            >
+              {theme.direction === 'rtl' ? (
+                <KeyboardArrowRight />
+              ) : (
+                <KeyboardArrowLeft />
+              )}
+            </Button>
+          }
+        />
       </Box>
-     
-    
     </React.Fragment>
   );
 }

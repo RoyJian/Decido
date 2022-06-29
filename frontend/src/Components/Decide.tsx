@@ -19,6 +19,9 @@ interface Props {
 export default function TimeLine(props: Props) {
   const [isEdit, setIsEdit] = React.useState(false);
   const { mealsArr } = React.useContext(AppContext) as appContextValueInterface;
+  React.useEffect(()=>{
+    //ToDo
+  },[]);
   return (
     <React.Fragment>
       <Grid
@@ -118,12 +121,12 @@ export default function TimeLine(props: Props) {
             }}
           >
             {props.data[props.index].recommands.map((restaurant, index) => (
-              <SwiperSlide key={restaurant.title}>
+              <SwiperSlide key={restaurant.name}>
                 <RestaurantCard
-                  title={restaurant.title}
+                  title={restaurant.name}
                   score={restaurant.score}
                   address={restaurant.address}
-                  imgURL={restaurant.imgURL}
+                  url={restaurant.url}
                 />
               </SwiperSlide>
             ))}
