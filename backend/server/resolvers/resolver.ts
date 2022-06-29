@@ -25,9 +25,10 @@ export default function root() {
         const para = { seed: args.seed, lng: args.lng, lat: args.lat, tag: args.tag };
         console.log(para);
         const res = await axios.get(url, { params: para });
+        const resDataSort = res.data.sort((first: any, second: any) => 0 - (first.name > second.name ? -1 : 1));
         console.log(res.data);
         if (res.data.errorcode === 666) throw new Error(res.data.msg);
-        const queryRes = await GetRestaurantInfo(res.data);
+        const queryRes = await GetRestaurantInfo(resDataSort);
         const finalres = queryRes.map((item, index) => {
           return { ...item, ...res.data[index] };
         });

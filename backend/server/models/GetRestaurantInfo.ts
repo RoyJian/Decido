@@ -1,3 +1,4 @@
+import { WithId } from 'mongodb';
 import { MongodbConn } from '../utils/MongodbConn';
 interface Restaurant {
   name: string;
@@ -12,9 +13,12 @@ export default async function GetRestaurantInfo(restaruasts: Restaurant[]) {
     };
   });
   const res = await collection
-    .find({
-      $or: namelist,
-    })
+    .find(
+      {
+        $or: namelist,
+      },
+      { sort: { name: 1 } }
+    )
     .toArray();
 
   return res.map((item) => {
