@@ -79,3 +79,22 @@ export const getRestaurantImg = async (url: string) => {
   console.log(data);
   return data;
 };
+export const addReview = async(author_id:string,restaurant_id:string,score:number)=>{
+  const mutation = gql`
+    mutation addReview($input: addReviewInput!) {
+      addReview(input: $input) {
+        code
+        msg
+      }
+    }`; 
+  const input = {
+    input:{
+      author_id,
+      restaurant_id,
+      score,
+    }
+  };
+  const res = await client.mutate({mutation,variables:input,fetchPolicy:'network-only'});
+  console.log(res.data.addReview);
+  return res.data.addReview;
+};

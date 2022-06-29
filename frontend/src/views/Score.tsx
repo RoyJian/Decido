@@ -6,9 +6,11 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Decide from '../Components/Decide';
 import { Meal } from '../Contexts/Interface';
 import StarRatingComponent from 'react-star-rating-component';
+import { addReview } from '../APIs/api';
+const uuid = localStorage.getItem('uuid') as string;
 export default function Score() {
   const navigate = useNavigate();
-  const [decideRes, setDecideRes] = React.useState([]);
+  const [decideRes, setDecideRes] = React.useState<any[]>([]);
   const [mealsArr, setMealsArr] = React.useState([]);
   const [scoreArr,setScoreArr] = React.useState<number[]>([0]);
   React.useEffect(() => {
@@ -61,8 +63,10 @@ export default function Score() {
                       value={scoreArr[index]}
                       onStarClick={(clickvalue)=>{
                         const temp = Array.from(scoreArr);
+                        const restaurant_id:string = decideRes[index].recommands[0].place_id;
                         temp[index] = clickvalue;
                         setScoreArr(temp);
+                        addReview(uuid,restaurant_id,clickvalue);
                       }}
                     />
                   </Box>
