@@ -13,24 +13,23 @@ export interface Meal{
   }
 
   export interface Restaurant{
-    name: string
-    score:number,
-    address:string,
-    imgURL:string
-    location:Location
-    
-    // place_id:string,
-    // name:string,
+    // name: string
     // score:number,
-    // location:{
-    //   lat:number,
-    //   lng:number
-    // },
-    // corrwith:number,
     // address:string,
-    // photo_id:string,
-    // tag:string,
-    // url:string
+    imgURL:string
+    // location:Location
+    place_id:string,
+    name:string,
+    score:number,
+    location:{
+      lat:number,
+      lng:number
+    },
+    corrwith:number,
+    address:string,
+    photo_id:string,
+    tag:string,
+    url:string
   }
   export interface DecideRes{
     meal:string,

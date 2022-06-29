@@ -38,9 +38,9 @@ export default function Step2() {
         color="primary"
         aria-label="add"
         sx={{
-          position: 'relative',
-          left:380,
-          top:600
+          position: 'fixed',
+          right:'60px',
+          bottom:'40px'
         }}
         onClick={()=>{
           const temp = [...mealsArr];

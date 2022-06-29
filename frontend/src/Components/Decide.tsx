@@ -126,7 +126,7 @@ export default function TimeLine(props: Props) {
                   title={restaurant.name}
                   score={restaurant.score}
                   address={restaurant.address}
-                  imgURL={restaurant.imgURL}
+                  url={restaurant.url}
                 />
               </SwiperSlide>
             ))}

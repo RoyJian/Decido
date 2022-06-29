@@ -1,20 +1,27 @@
 import React from 'react';
 import {  Card, CardMedia,CardContent ,Typography,Icon} from '@mui/material';
 import { Star,LocationOnSharp } from '@mui/icons-material';
+import { getRestaurantImg } from '../APIs/api';
 
 interface Props {
   title: string;
   score: number;
   address: string;
-  imgURL: string;
+  url:string;
 }
 
 export default function RestaurantCard(props: Props) {
+  const [imageURL,setImgURL] = React.useState('');
+  React.useEffect(()=>{
+    getRestaurantImg(props.url).then((res)=>{
+      setImgURL(res);
+    });
+  },[]);
   return <Card sx={{ width: 335, height: 300,  }}>
     <CardMedia
         component="img"
         height="150"
-        image={props.imgURL}
+        image={imageURL}
         alt="restaurant title"
     />
     <CardContent>

@@ -2,7 +2,7 @@ import React from 'react';
 import Decide from './Decide';
 import { AppContext, appContextValueInterface } from '../Contexts/AppProvider';
 import { Box, Grid } from '@mui/material';
-import { DecideInit as i } from '../Contexts/InitValue'; //模擬api
+// import { DecideInit as i } from '../Contexts/InitValue'; //模擬api
 import { DecideRes } from '../Contexts/Interface';
 import { getRecommand } from '../APIs/api';
 import { useNavigate } from 'react-router-dom';

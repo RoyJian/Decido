@@ -29,6 +29,7 @@
     "@types/react-swipeable-views": "^0.13.1",
     "@types/react-swipeable-views-utils": "^0.13.3",
     "apollo-client": "^2.6.10",
+    "axios": "^0.27.2",
     "date-fns": "^2.28.0",
     "fontawesome-free": "^1.0.4",
     "graphql": "^16.5.0",
