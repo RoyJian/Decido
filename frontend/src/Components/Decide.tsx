@@ -6,7 +6,7 @@ import React from 'react';
 import { AppContext, appContextValueInterface } from '../Contexts/AppProvider';
 import RestaurantCard from './RestaurantCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { DecideRes } from '../Contexts/Interface';
+import { DecideRes, Meal } from '../Contexts/Interface';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
 import { EffectCards } from 'swiper';
@@ -16,11 +16,13 @@ interface Props {
   isEdit:boolean;
 }
 
-export default function TimeLine(props: Props) {
+export default function Decido(props: Props) {
   const [isEdit, setIsEdit] = React.useState(false);
-  const { mealsArr } = React.useContext(AppContext) as appContextValueInterface;
+  const mealsArr :Meal[]= (JSON.parse(localStorage.getItem('mealArr') || '{}'));
+  // const { mealsArr } = React.useContext(AppContext) as appContextValueInterface;
   React.useEffect(()=>{
     //ToDo
+    // console.log(111111111,mealsArr);
   },[]);
   return (
     <React.Fragment>
@@ -31,7 +33,10 @@ export default function TimeLine(props: Props) {
         xs={6}
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
-        <EditMeal index={props.index} enable={isEdit} setEnable={setIsEdit} />
+        { props.isEdit
+          ?<EditMeal index={props.index} enable={isEdit} setEnable={setIsEdit} />
+          :null
+        }
         <Grid
           item
           xs={6}
@@ -114,13 +119,14 @@ export default function TimeLine(props: Props) {
             modules={[EffectCards]}
             className="mySwiper"
             onActiveIndexChange={(e)=>{
-              console.log(e.activeIndex);
-              const decideRes :DecideRes[] = JSON.parse(localStorage.getItem('decideRes')|| '{}');
+              const decideRes :DecideRes[] = JSON.parse(localStorage.getItem('decideRes')|| '[]');
               decideRes[props.index].recommands[0] = props.data[props.index].recommands[e.activeIndex];
               localStorage.setItem('decideRes',JSON.stringify(decideRes));
             }}
           >
-            {props.data[props.index].recommands.map((restaurant, index) => (
+            {props.data[props.index].recommands.map((restaurant, index) => {
+              // console.log(index,restaurant.name,restaurant.url);
+              return(
               <SwiperSlide key={restaurant.name}>
                 <RestaurantCard
                   title={restaurant.name}
@@ -129,7 +135,7 @@ export default function TimeLine(props: Props) {
                   url={restaurant.url}
                 />
               </SwiperSlide>
-            ))}
+            );})}
           </Swiper>
         </Grid>
       </Grid>

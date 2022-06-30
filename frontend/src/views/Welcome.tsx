@@ -11,6 +11,7 @@ import P3 from '../imgs/p3.png';
 import P4 from '../imgs/p4.png';
 import { useNavigate } from 'react-router-dom';
 import { registID } from '../APIs/api';
+import { AppContext ,appContextValueInterface} from '../Contexts/AppProvider';
 
 const images = [
   {
@@ -37,7 +38,7 @@ export default function Wealcome() {
   const [activeStep, setActiveStep] = React.useState(0);
   const navigate = useNavigate();
   const maxSteps = images.length;
-
+  const appContext = React.useContext(AppContext) as appContextValueInterface;
   React.useEffect(() => {
     const uuid = localStorage.getItem('uuid');
     if (uuid === null) {
@@ -94,11 +95,11 @@ export default function Wealcome() {
             sx={{ maxWidth: 151, maxHeight: 60 }}
             onClick={() => {
               const localDate = localStorage.getItem('date');
+              appContext.setActiveStep(0);
               if (
                 localDate !== new Date().toDateString() &&
                 localDate !== null
               ) {
-                console.log('評分');
                 navigate('/score');
               } else navigate('/steps');
             }}

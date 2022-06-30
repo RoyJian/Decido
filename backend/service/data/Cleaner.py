@@ -1,4 +1,4 @@
-from utils.MongodbConn import MongodbConn
+from MongodbConn import MongodbConn
 
 def main():
     mongodbConn = MongodbConn()

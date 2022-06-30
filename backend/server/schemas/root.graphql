@@ -2,6 +2,9 @@ type Query {
   restaurants(lat:Float!,lng:Float!,seed:String,tag:String): [restaurant],
   uuid:String
 }
+type Mutation{
+  addReview(input:addReviewInput!):addReviewRes 
+}
 type restaurant {
   _id:String,
   place_id:String,
@@ -18,4 +21,13 @@ type restaurant {
 type Location{
   lat:Float,
   lng:Float
+}
+type addReviewRes {
+  code:Int,
+  msg:String
+}
+input addReviewInput{
+  author_id:String!,
+  restaurant_id:String!,
+  score:Int!,
 }
