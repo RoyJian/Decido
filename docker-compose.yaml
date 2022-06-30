@@ -52,7 +52,8 @@ services:
       - MONGODB_USER=${MONGODB_USER}
       - MONGODB_PASS=${MONGODB_PASS}
       - MONGODB_DB=${MONGODB_DB}
-      - RABBITMQ_HOST =${RABBITMQ_HOST}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - SERVICE_PORT=${SERVICE_PORT}
     restart: always
     command: "python service.py"
     depends_on:
