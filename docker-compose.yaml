@@ -61,6 +61,3 @@ services:
       - mq
     ports:
       - 127.0.0.1:12288:12288
-  busybox:
-    image: busybox:latest
-    
