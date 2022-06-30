@@ -19,3 +19,43 @@ services:
     ports:
       - 127.0.0.1:5672:5672
       - 127.0.0.1:15672:15672
+  server:
+    container_name: decido-server
+    build:
+      context: ./backend/server
+    image: decido-server
+    restart: always
+    environment: 
+      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_PORT=${MONGODB_PORT}
+      - MONGODB_USER=${MONGODB_USER}
+      - MONGODB_PASS=${MONGODB_PASS}
+      - MONGODB_DB=${MONGODB_DB}
+      - SERVICE_PORT=${SERVICE_PORT}
+      - SERVICE_HOST=${SERVICE_HOST}
+      - SERVER_PORT=${SERVER_PORT}
+    depends_on:
+      - db
+      - service
+    command: "ts-node server.ts"
+    ports:
+      - 127.0.0.1:3000:3000
+  service:
+    container_name: decido-service
+    build:
+      context: ./backend/service
+    image: decido-service
+    environment: 
+      - GOOLE_MAPS_KEY:${GOOLE_MAPS_KEY}
+      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_PORT=${MONGODB_PORT}
+      - MONGODB_USER=${MONGODB_USER}
+      - MONGODB_PASS=${MONGODB_PASS}
+      - MONGODB_DB=${MONGODB_DB}
+      - RABBITMQ_HOST =${RABBITMQ_HOST}
+    restart: always
+    depends_on:
+      - db
+      - mq
+    ports:
+      - 127.0.0.1:12288:12288
