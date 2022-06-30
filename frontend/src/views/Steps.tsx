@@ -17,6 +17,7 @@ import {
   StepLabel,
   Button,
 } from '@mui/material';
+import { AppContext,appContextValueInterface } from '../Contexts/AppProvider';
 
 interface LabelProps {
   optional?: React.ReactNode;
@@ -24,7 +25,10 @@ interface LabelProps {
 const steps = ['Choose a style', 'Number of Meals', 'Decide !'];
 
 export default function Steps() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  // const [activeStep, setActiveStep] = React.useState(0);
+  const { activeStep, setActiveStep} = React.useContext(
+    AppContext
+  ) as appContextValueInterface;
   const navigate = useNavigate();
   return (
     <Grid container>
@@ -82,10 +86,11 @@ export default function Steps() {
       >
         <Button
           onClick={() => {
+            console.log(activeStep);
             setActiveStep(
               activeStep < steps.length ? activeStep + 1 : activeStep
             );
-            if (activeStep === steps.length - 1) navigate('/Results');
+            if (activeStep >= steps.length - 1) navigate('/Results');
           }}
         >
           <FontAwesomeIcon icon={faChevronRight} size="3x" />

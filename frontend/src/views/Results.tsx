@@ -2,7 +2,8 @@ import { Box, Grid, Typography, Container } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Decide from '../Components/Decide';
-import { Meal } from '../Contexts/Interface';
+import { DecideRes, Meal } from '../Contexts/Interface';
+const localDate = localStorage.getItem('date');
 export default function Results() {
   const navigate = useNavigate();
   const [decideRes, setDecideRes] = React.useState([]);
@@ -12,12 +13,13 @@ export default function Results() {
       localStorage.getItem('decideRes') || '{}'
     );
     const localMealArr = JSON.parse(localStorage.getItem('mealArr') || '{}');
-    const localDate = localStorage.getItem('date');
+    
     if (
       !Array.isArray(localDecideRes) ||
       !Array.isArray(localMealArr) ||
       localDate !== new Date().toDateString()
     ) {
+      console.log('navigate ti steps',!Array.isArray(localDecideRes) ,!Array.isArray(localMealArr));
       navigate('/steps');
     }
     setDecideRes(localDecideRes);
@@ -46,7 +48,7 @@ export default function Results() {
             />
           </Typography>
         </Grid>
-        {mealsArr.map((meal: Meal, index) => {
+        {mealsArr.map((meal: Meal, index:number) => {
           return <Decide key={meal.name} index={index} data={decideRes} isEdit={false} />;
         })}
       </Grid>

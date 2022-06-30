@@ -44,7 +44,6 @@ export default function Step2() {
         }}
         onClick={()=>{
           const temp = [...mealsArr];
-          console.log(yourLocation);
           temp.push({
              name:'',
              time:{

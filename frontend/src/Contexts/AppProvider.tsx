@@ -9,6 +9,8 @@ export interface appContextValueInterface {
   setMealsArr: (state: Meal[]) => void;
   yourLocation:Location;
   setYourLocation:(state:Location)=>void;
+  activeStep:number;
+  setActiveStep:(state:number)=>void;
 }
 interface Props {
   children: JSX.Element;
@@ -20,13 +22,16 @@ export default function Context(props: Props) {
   const [theSelctStyle, setTheSelctStyle] = useState('');
   const [mealsArr, setMealsArr] = useState<Meal[]>(initMealsArr);
   const [yourLocation,setYourLocation]=useState<Location>({lat:0,lng:0});
+  const [activeStep, setActiveStep] = React.useState(0);
   const appContextValue: appContextValueInterface = {
     theSelctStyle,
     setTheSelctStyle,
     mealsArr,
     setMealsArr,
     yourLocation,
-    setYourLocation
+    setYourLocation,
+    activeStep,
+    setActiveStep
   };
   return (
     <AppContext.Provider value={appContextValue}>

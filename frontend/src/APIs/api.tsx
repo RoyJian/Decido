@@ -60,7 +60,6 @@ export const getRecommand = async (seed: string, meal: Meal, tag: string) => {
       }
     }
   `;
-  console.log(typeof variables.seed);
   const result = await client.query({
     query,
     variables,
@@ -76,7 +75,6 @@ export const getRestaurantImg = async (url: string) => {
   data = data.slice(0, endPos);
   const startPos = data.lastIndexOf('https');
   data = data.slice(startPos, endPos - 2);
-  console.log(data);
   return data;
 };
 export const addReview = async(author_id:string,restaurant_id:string,score:number)=>{
