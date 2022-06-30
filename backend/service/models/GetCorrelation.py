@@ -28,17 +28,19 @@ class GetCorrelation:
                 'location': {
                     '$near': {
                         '$geometry': {'type': 'Point', 'coordinates': self.coordinates},
-                        '$maxDistance': 500,
+                        '$maxDistance': 800,
                     },
                 },
                 '$or': [
                     {
                         'tag': self.tag
-                    }, {
-                        'name': self.restautant_name
                     }
                 ]
             }, {'_id': 0, 'place_id': 1, 'name': 1})))
+        print('before',itemData.shape[0])
+        itemData2 = pd.DataFrame(list(list(collection.find({'name':self.restautant_name},{'_id': 0, 'place_id': 1, 'name': 1}))));
+        itemData = pd.concat([itemData,itemData2], ignore_index = True, axis = 0) 
+        print('after',itemData.shape[0])
         if itemData.shape[0] < 2 :
             return {'errorcode':666,'msg': 'No match restaurants'}
         itemData.columns = ['restautant_id', 'restautant_name']
@@ -53,7 +55,7 @@ class GetCorrelation:
             columns=["restautant_name"],
             values="score"
         )
-        pivot_table.fillna(0, inplace=True)  # temp use fake score
+        pivot_table.fillna(random.randint(1,5), inplace=True)  # temp use fake score random.randint(1,5)
         restaurant = pivot_table[self.restautant_name]
         similarity_with_other_restaurant = pivot_table.corrwith(restaurant)
         similarity_with_other_restaurant = similarity_with_other_restaurant.sort_values(
