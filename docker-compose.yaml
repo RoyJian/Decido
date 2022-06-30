@@ -54,6 +54,7 @@ services:
       - MONGODB_DB=${MONGODB_DB}
       - RABBITMQ_HOST =${RABBITMQ_HOST}
     restart: always
+    command: "python service.py"
     depends_on:
       - db
       - mq
