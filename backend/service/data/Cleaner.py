@@ -1,35 +1,38 @@
 from MongodbConn import MongodbConn
 
+
 def main():
     mongodbConn = MongodbConn()
-    collect = mongodbConn.setCollection('reviews')
+    collect = mongodbConn.setCollection('restaurants')
     deleteList = collect.aggregate(
         [
             {
                 '$group': {
-                    '_id': '$author_id',
+                    '_id': '$name',
                     'counts': {
                         '$sum': 1
                     }
                 }
             }, {
                 '$match': {
-                    'counts': 1
+                    'counts': {
+                        '$gt': 1
+                    }
                 }
             }, {
                 '$project': {
-                    '_id': True
+                    '_id': False,
+                    'name': '$_id'
                 }
             }
         ]
     )
     print(deleteList)
     for obj in deleteList:
-        print(obj['_id'])
-        collect.delete_one({'author_id':obj['_id']})
+        print(obj['name'])
+        collect.delete_one({'name': obj['name']})
     pass
     print('done')
-
 
 
 if __name__ == '__main__':

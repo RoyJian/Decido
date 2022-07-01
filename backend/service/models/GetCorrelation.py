@@ -55,7 +55,7 @@ class GetCorrelation:
             columns=["restautant_name"],
             values="score"
         )
-        pivot_table.fillna(random.randint(1,5), inplace=True)  # temp use fake score random.randint(1,5)
+        pivot_table.fillna(3, inplace=True)  # temp use fake score random.randint(1,5)
         restaurant = pivot_table[self.restautant_name]
         similarity_with_other_restaurant = pivot_table.corrwith(restaurant)
         similarity_with_other_restaurant = similarity_with_other_restaurant.sort_values(

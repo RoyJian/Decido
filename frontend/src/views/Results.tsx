@@ -19,7 +19,7 @@ export default function Results() {
       !Array.isArray(localMealArr) ||
       localDate !== new Date().toDateString()
     ) {
-      console.log('navigate ti steps',!Array.isArray(localDecideRes) ,!Array.isArray(localMealArr));
+      console.log('navigate to steps',localDate !== new Date().toDateString(),!Array.isArray(localDecideRes) ,!Array.isArray(localMealArr));
       navigate('/steps');
     }
     setDecideRes(localDecideRes);
