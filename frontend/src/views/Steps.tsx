@@ -16,6 +16,7 @@ import {
   Stepper,
   StepLabel,
   Button,
+  Typography,
 } from '@mui/material';
 import { AppContext,appContextValueInterface } from '../Contexts/AppProvider';
 
@@ -60,7 +61,7 @@ export default function Steps() {
               const labelProps: LabelProps = {};
               return (
                 <Step key={label}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
+                  <StepLabel {...labelProps}><Typography variant='h6'>{label}</Typography></StepLabel>
                 </Step>
               );
             })}

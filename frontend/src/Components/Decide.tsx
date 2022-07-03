@@ -1,6 +1,6 @@
 import { Box, Typography, Avatar, Grid } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationPin } from '@fortawesome/free-solid-svg-icons';
+import LocalDiningIcon from '@mui/icons-material/LocalDining';
+import LocationOnSharpfrom from '@mui/icons-material/LocationOnSharp';
 import EditMeal from './EditMeal';
 import React from 'react';
 import { AppContext, appContextValueInterface } from '../Contexts/AppProvider';
@@ -97,9 +97,13 @@ export default function Decido(props: Props) {
           }}
         >
           <Box>
-            <Typography variant="h5">{mealsArr[props.index].name} </Typography>
-            <Typography variant="h6">
-              <FontAwesomeIcon icon={faLocationPin} />{' '}
+         
+            <Typography variant="h5">
+              <LocalDiningIcon/>
+              {mealsArr[props.index].name} 
+            </Typography>
+            <Typography variant="h5">
+              <LocationOnSharpfrom/>
               {mealsArr[props.index].location.name}{' '}
             </Typography>
           </Box>
