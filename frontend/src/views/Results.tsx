@@ -8,7 +8,9 @@ import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import GoogleMaps from '../Components/GoogleMaps';
 import { InfoWindow, Marker } from '@react-google-maps/api';
 import RestaurantCard from '../Components/RestaurantCard';
-const localDate = localStorage.getItem('date');
+import Swal from 'sweetalert2';
+
+
 export default function Results() {
   const navigate = useNavigate();
   const [isMapMode, SetIsMapMode] = React.useState(false);
@@ -16,11 +18,11 @@ export default function Results() {
   const [decideRes, setDecideRes] = React.useState([]);
   const [mealsArr, setMealsArr] = React.useState([]);
   React.useEffect(() => {
+    const localDate = localStorage.getItem('date');
     const localDecideRes = JSON.parse(
       localStorage.getItem('decideRes') || '{}'
     );
     const localMealArr = JSON.parse(localStorage.getItem('mealArr') || '{}');
-
     if (
       !Array.isArray(localDecideRes) ||
       !Array.isArray(localMealArr) ||
@@ -33,6 +35,12 @@ export default function Results() {
         !Array.isArray(localDecideRes),
         !Array.isArray(localMealArr)
       );
+      Swal.fire({
+        title: 'OOPS',
+        text: '今天還沒選擇哦！',
+        icon: 'info',
+        confirmButtonText: 'OK',
+      });
       navigate('/steps');
     }
     setDecideRes(localDecideRes);
@@ -98,7 +106,6 @@ export default function Results() {
                   >
                     {activeMarker === meal.recommands[0].name ? (
                       <InfoWindow onCloseClick={() => setActiveMarker('')}>
-                        {/* <div>{meal.recommands[0].name}</div> */}
                         <RestaurantCard
                           title={meal.recommands[0].name}
                           score={meal.recommands[0].score}

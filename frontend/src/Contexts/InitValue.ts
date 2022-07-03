@@ -1,13 +1,5 @@
 import { Meal, DecideRes, RestaurantStyle } from './Interface';
 
-export const restaurantStyles2: string[] = [
-  '日式',
-  '美式',
-  '韓式',
-  '小吃',
-  '中餐',
-  '麵館',
-];
 export const restaurantStyles: RestaurantStyle[] = [
   {
     name: '日式',
