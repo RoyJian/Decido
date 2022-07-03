@@ -17,6 +17,10 @@ interface addReviewRes {
   code: number;
   msg: string;
 }
+interface Restaurant {
+  name: string;
+  corrwith: number;
+}
 export default function root() {
   const root = {
     Query: {
@@ -26,9 +30,12 @@ export default function root() {
         console.log(para);
         const res = await axios.get(url, { params: para });
         if (res.data.errorcode === 666) throw new Error(JSON.stringify(res.data));
-        const resDataSort = res.data.sort((first: any, second: any) => 0 - (first.name > second.name ? -1 : 1));
-        console.log(res.data);
+        const restaurants:Restaurant[] = res.data;
+        console.log(restaurants)
+        const resDataSort = restaurants.sort((first: Restaurant, second: Restaurant) => 0 - (first.name > second.name ? -1 : 1));
+        // console.log(res.data);
         const queryRes = await GetRestaurantInfo(resDataSort);
+        
         const finalres = queryRes.map((item, index) => {
           return { ...item, ...res.data[index] };
         });

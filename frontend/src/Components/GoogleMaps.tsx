@@ -4,19 +4,20 @@ const containerStyle = {
   width: '720px',
   height: '400px',
 };
-
 interface Props {
-  children: JSX.Element;
-  center:{
+  children: JSX.Element | JSX.Element [] ;
+  center?:{
     lat:number,
     lng:number
   },
+  width?:string,
+  height?:string
 }
 
 export default function GoogleMaps(props: Props) {
-  const center = {
-    lat: props.center.lat,
-    lng: props.center.lng,
+  const containerStyle = {
+    width: props.width||'720px',
+    height: props.height||'400px',
   };
   const { isLoaded } = useJsApiLoader({
     id: 'Decido',
@@ -25,7 +26,16 @@ export default function GoogleMaps(props: Props) {
   const [map, setMap] = React.useState<any>(null);
 
   const onLoad = React.useCallback(function callback(map: any) {
-    const bounds = new window.google.maps.LatLngBounds(center);
+    const bounds = new window.google.maps.LatLngBounds();
+    if (props.center?.lat !== undefined){
+      const center = props.center as unknown as google.maps.LatLng;
+      bounds.extend(center);
+    }
+    else{
+      Array.from(props.children as JSX.Element []).forEach((element)=> {
+        bounds.extend(element.props.position);
+      });
+    }
     map.fitBounds(bounds);
     setMap(map);
   }, []);
@@ -36,8 +46,6 @@ export default function GoogleMaps(props: Props) {
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={center}
-      zoom={16}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >

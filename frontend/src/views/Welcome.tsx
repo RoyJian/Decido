@@ -11,7 +11,7 @@ import P3 from '../imgs/p3.png';
 import P4 from '../imgs/p4.png';
 import { useNavigate } from 'react-router-dom';
 import { registID } from '../APIs/api';
-import { AppContext ,appContextValueInterface} from '../Contexts/AppProvider';
+import { AppContext, appContextValueInterface } from '../Contexts/AppProvider';
 
 const images = [
   {
@@ -88,7 +88,7 @@ export default function Wealcome() {
           </div>
         ))}
       </AutoPlaySwipeableViews>
-      <Box sx={{ position: 'relative', top: '-20vh' }}>
+      <Box sx={{ position: 'fixed', bottom: '5vh', left: '45vw' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="contained"

@@ -58,7 +58,7 @@ export default function Step3() {
           console.log(apiRes);
           if (apiRes.errorcode === 666) {
             Swal.fire({
-              title: 'info',
+              title: 'OOPS',
               text: apiRes.msg,
               icon: 'info',
               confirmButtonText: 'OK',

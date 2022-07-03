@@ -13,11 +13,7 @@ export interface Meal{
   }
 
   export interface Restaurant{
-    // name: string
-    // score:number,
-    // address:string,
     imgURL:string
-    // location:Location
     place_id:string,
     name:string,
     score:number,
@@ -38,4 +34,8 @@ export interface Meal{
   export interface Location{
     lat:number,
     lng:number
+  }
+  export interface RestaurantStyle {
+    name:string,
+    url:string
   }
