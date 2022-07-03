@@ -39,3 +39,7 @@ export interface Meal{
     lat:number,
     lng:number
   }
+  export interface RestaurantStyle {
+    name:string,
+    url:string
+  }
