@@ -8,7 +8,7 @@ const { SERVICE_HOST, SERVICE_PORT } = process.env;
 export interface I_addReviewInput {
   author_id: string;
   restaurant_id: string;
-  soore: number;
+  score: number;
 }
 export interface I_addReviewArgs {
   input: I_addReviewInput;

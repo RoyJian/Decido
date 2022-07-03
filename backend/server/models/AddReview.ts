@@ -11,6 +11,5 @@ export default async function AddReview(args: I_addReviewInput) {
     author_name,
   };
   const res = await collection.updateOne({ _id: id }, { $set: { _id: id, ...review } }, { upsert: true });
-  console.log(res.upsertedCount);
   return res.upsertedCount;
 }

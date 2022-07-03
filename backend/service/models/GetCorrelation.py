@@ -35,14 +35,18 @@ class GetCorrelation:
                     {
                         'tag': self.tag
                     }
-                ]
+                ],
+                'tag': {
+                    '$ne': ('' if type(self.tag) == str else '早餐')
+                }
             }, {'_id': 0, 'place_id': 1, 'name': 1})))
-        print('before',itemData.shape[0])
-        itemData2 = pd.DataFrame(list(list(collection.find({'name':self.restautant_name},{'_id': 0, 'place_id': 1, 'name': 1}))));
-        itemData = pd.concat([itemData,itemData2], ignore_index = True, axis = 0) 
-        print('after',itemData.shape[0])
-        if itemData.shape[0] < 2 :
-            return {'errorcode':666,'msg': 'No match restaurants'}
+        print('before', itemData.shape[0])
+        itemData2 = pd.DataFrame(list(list(collection.find(
+            {'name': self.restautant_name}, {'_id': 0, 'place_id': 1, 'name': 1}))))
+        itemData = pd.concat([itemData, itemData2], ignore_index=True, axis=0)
+        print('after', itemData.shape[0])
+        if itemData.shape[0] < 2:
+            return {'errorcode': 666, 'msg': 'No match restaurants'}
         itemData.columns = ['restautant_id', 'restautant_name']
         if self.restautant_name == '':
             randindex = random.randrange((itemData.shape[0]-1))
@@ -55,7 +59,8 @@ class GetCorrelation:
             columns=["restautant_name"],
             values="score"
         )
-        pivot_table.fillna(3, inplace=True)  # temp use fake score random.randint(1,5)
+        # temp use fake score random.randint(1,5)
+        pivot_table.fillna(3, inplace=True)
         restaurant = pivot_table[self.restautant_name]
         similarity_with_other_restaurant = pivot_table.corrwith(restaurant)
         similarity_with_other_restaurant = similarity_with_other_restaurant.sort_values(
