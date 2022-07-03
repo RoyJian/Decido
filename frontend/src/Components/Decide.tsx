@@ -19,11 +19,7 @@ interface Props {
 export default function Decido(props: Props) {
   const [isEdit, setIsEdit] = React.useState(false);
   const mealsArr :Meal[]= (JSON.parse(localStorage.getItem('mealArr') || '{}'));
-  // const { mealsArr } = React.useContext(AppContext) as appContextValueInterface;
-  React.useEffect(()=>{
-    //ToDo
-    // console.log(111111111,mealsArr);
-  },[]);
+
   return (
     <React.Fragment>
       <Grid
