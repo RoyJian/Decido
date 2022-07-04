@@ -28,7 +28,7 @@ class GetCorrelation:
                 'location': {
                     '$near': {
                         '$geometry': {'type': 'Point', 'coordinates': self.coordinates},
-                        '$maxDistance': 800,
+                        '$maxDistance': 500,
                     },
                 },
                 '$or': [
