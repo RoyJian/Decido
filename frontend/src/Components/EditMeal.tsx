@@ -152,7 +152,7 @@ export default function EditMeal(props: Props) {
             }}
           >
             <GoogleMaps
-              center={{ lat: mealLocation.lat, lng: mealLocation.lng }}
+              center={{ lat: 25.038629069687218,lng:121.5323661180218}}
             >
               <Marker
                 draggable

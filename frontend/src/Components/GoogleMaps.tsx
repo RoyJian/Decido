@@ -21,6 +21,7 @@ export default function GoogleMaps(props: Props) {
   };
   const { isLoaded } = useJsApiLoader({
     id: 'Decido',
+
     googleMapsApiKey: '',
   });
   const [map, setMap] = React.useState<any>(null);
